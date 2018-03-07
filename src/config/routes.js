@@ -13,6 +13,6 @@ module.exports = function(app){
     const contratosService = require('../api/contratos/contratosService');
     contratosService.register(router, '/contratos');
 
-    const loginService = require('../api/login/loginService');
+    // const loginService = require('../api/login/loginService');
     loginService.register(router, '/login');
 }
