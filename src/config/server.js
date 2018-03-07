@@ -14,7 +14,9 @@ app.use(allowCors);
 
 
 const port = 3030;
-app.listen(port);
-console.log(`Servidor rodando na porta ${port}`);
+server.listen(process.env.PORT || port, function() {
+    console.log(`BACKEND is running on port ${port}.`)
+});
+
 
 module.exports = app;
