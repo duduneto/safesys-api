@@ -14,5 +14,5 @@ module.exports = function(app){
     contratosService.register(router, '/contratos');
 
     // const loginService = require('../api/login/loginService');
-    loginService.register(router, '/login');
+    // loginService.register(router, '/login');
 }
