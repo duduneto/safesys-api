@@ -1,11 +1,12 @@
 {
-  "name": "SafeSys",
+  "name": "safesys-api",
   "version": "1.0.0",
   "description": "",
   "main": "loader.js",
   "scripts": {
     "dev": "nodemon",
-    "production": "pm2 start loader.js --name backend"
+    "production": "pm2 start loader.js --name safesys-api",
+    "start": "nodemon loader.js"
   },
   "keywords": [],
   "author": "",
