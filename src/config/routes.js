@@ -11,7 +11,7 @@ module.exports = function(app){
     const protectedApi = express.Router();
     app.use('/api', protectedApi);
 
-    protectedApi.use(auth);
+    // protectedApi.use(auth);   <-- Descomentado para uso do POSTMAN
 
     const Contratos = require('../api/contratos/contratosService');
     Contratos.register(protectedApi, '/contratos');
