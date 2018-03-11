@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const env = require('../../../.env');
+const env = process.env.AUTH_SECRET;
 const User = require('./user');
 // const getUser = require('./getUser');
 
