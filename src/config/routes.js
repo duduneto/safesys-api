@@ -1,18 +1,34 @@
 const Router = require('koa-router');
 // const router = new Router();
-const Contratos = require('../api/contratos/contratosService');
+
 const express = require('express');
+const auth = require('./auth');
 
 module.exports = function(app){
-    // app.use(router.routes()).use(router.allowedMethods);
-    const router = express.Router();
-
-    app.use('/api', router);
     
+    // Rotas Protegidas por Token
 
-    const contratosService = require('../api/contratos/contratosService');
-    contratosService.register(router, '/contratos');
+    const protectedApi = express.Router();
+    app.use('/api', protectedApi);
 
-    // const loginService = require('../api/login/loginService');
-    // loginService.register(router, '/login');
+    protectedApi.use(auth);
+
+    const Contratos = require('../api/contratos/contratosService');
+    Contratos.register(protectedApi, '/contratos');
+
+
+    // Rotas Abertas
+
+    const openApi = express.Router();
+    app.use('/oapi', openApi);
+
+    const AuthService = require('../api/user/authService');
+    openApi.post('/login', AuthService.login);
+    openApi.post('/signup', AuthService.signup);
+    openApi.post('/validateToken', AuthService.validateToken);
+
+    
+    // Excluir Linhas Quando Finalizar
+    const User = require('../api/user/userService');
+    User.register(openApi, '/usuario');
 }
