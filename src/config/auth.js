@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const env = require('../../.env');
+// const env = require('../../.env');
 
 module.exports = (req, res, next) => {
     if(req.method === 'OPTIONS'){
@@ -11,7 +11,7 @@ module.exports = (req, res, next) => {
             return res.status(403).send( { errors: ["Nenhum token encontrado"] } );
         }
 
-        jwt.verify(token, env.authSecret, (err, decoded) => {
+        jwt.verify(token, process.env.AUTH_SECRET , (err, decoded) => {
             if(err){
                 return res.status(403).send( { errors: ['Falha na autenticação do Token'] } );
             } else{
