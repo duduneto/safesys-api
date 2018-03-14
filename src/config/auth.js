@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const env = process.env.AUTH_SECRET;
+const env = require('../../.env');
 
 module.exports = (req, res, next) => {
     if(req.method === 'OPTIONS'){

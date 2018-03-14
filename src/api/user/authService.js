@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const env = process.env.AUTH_SECRET;
+const env = require('../../../.env');
 const User = require('./user');
 // const getUser = require('./getUser');
 
@@ -29,7 +29,7 @@ const login = (req, res, next) => {
     const salt = bcrypt.genSaltSync();
     const passwordHasheado = bcrypt.hashSync(password, salt);
     
-    console.log(passwordHasheado, email);
+    
 
     User.findOne( {email}, (err, user) => {
         if(err){
@@ -37,7 +37,7 @@ const login = (req, res, next) => {
             
         } else if (user && bcrypt.compareSync(password, user.password) ) {
             
-            const token = jwt.sign( {user} , process.env.AUTH_SECRET, { expiresIn: '1 day' });
+            const token = jwt.sign( {user} , env.authSecret, { expiresIn: '1 day' });
             
             const { name, email } = user
             res.json({ name, email, token });
@@ -67,7 +67,7 @@ const login = (req, res, next) => {
 // };
 
 const validateToken = (req, res, token) => {
-    token = 'req.body.token' || '';
+    token = req.body.token || '';
     jwt.verify(token, env.authSecret, (err, decoded) => {
         return res.status(200).send({ valid : !err });
     });

@@ -2,14 +2,15 @@ const BodyParser = require('body-parser');
 // const Koa = require('koa');
 const express =  require('express');
 const logger = require('koa-logger');
+const cors = require('cors');
 
 const app = express();
-const allowCors = require('./cors');
+// const allowCors = require('./cors');
 
 
 app.use(BodyParser.urlencoded({ extended: true }));
 app.use(BodyParser.json());
-app.use(allowCors);
+app.use(cors());
 // app.use(logger());
 
 
