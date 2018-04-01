@@ -38,7 +38,7 @@ const login = (req, res, next) => {
             
         } else if (user && bcrypt.compareSync(password, user.password) ) {
             
-            const token = jwt.sign( {user} , process.env.AuthSecret , { expiresIn: '1 day' });
+            const token = jwt.sign( {user} , process.env.AUTH_SECRET , { expiresIn: '1 day' });
             
             const { name, email } = user
             res.json({ name, email, token });
@@ -61,7 +61,7 @@ const login = (req, res, next) => {
 //         return res.status(400).send({ errors: ['Usuario/Senha Invalidos'] } );
 //     }
 //     const user = getUser(email, password);
-//     const token = jwt.sign(user, process.env.AuthSecret, { expiresIn: '1 day' });
+//     const token = jwt.sign(user, process.env.AUTH_SECRET, { expiresIn: '1 day' });
 //     return {
 //         token : token,
 //     };
@@ -69,7 +69,7 @@ const login = (req, res, next) => {
 
 const validateToken = (req, res, token) => {
     token = req.body.token || '';
-    jwt.verify(token, process.env.AuthSecret , (err, decoded) => {
+    jwt.verify(token, process.env.AUTH_SECRET , (err, decoded) => {
         return res.status(200).send({ valid : !err });
     });
 }
