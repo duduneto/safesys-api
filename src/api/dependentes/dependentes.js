@@ -11,7 +11,8 @@ const dependenteSchema = new mongoose.Schema({
     sexo: { type:String, required: [true, ' Sexo é Obrigatório '], uppercase: true,
             enum: ['MASCULINO','FEMININO'] },
     segurado_nome:{type: String, required:[true, 'Nome do Segurado é Obrigatório']},
-    segurado_cpf:{type: String, required:[true, 'Cpf do Segurado é Obrigatório']}
+    segurado_cpf:{type: String, required:[true, 'Cpf do Segurado é Obrigatório']},
+    tipo_dependente: {type: String, required:[true, 'Tipo de Dependente é Obrigatório']}
 
 });
 
