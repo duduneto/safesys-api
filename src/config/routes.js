@@ -15,6 +15,8 @@ module.exports = function(app){
 
     const Contratos = require('../api/contratos/contratosService');
     Contratos.register(protectedApi, '/contratos');
+    const Dependente = require('../api/dependentes/dependentesService');
+    Dependente.register(protectedApi, '/dependentes')
 
 
     // Rotas Abertas

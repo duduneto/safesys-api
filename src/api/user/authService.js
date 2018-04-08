@@ -61,7 +61,7 @@ const login = (req, res, next) => {
 //         return res.status(400).send({ errors: ['Usuario/Senha Invalidos'] } );
 //     }
 //     const user = getUser(email, password);
-//     const token = jwt.sign(user, process.env.AUTH_SECRET, { expiresIn: '1 day' });
+//     const token = jwt.sign(user, env, { expiresIn: '1 day' });
 //     return {
 //         token : token,
 //     };
