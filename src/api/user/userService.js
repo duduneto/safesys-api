@@ -1,7 +1,7 @@
 const User = require('./user');
 const errorHandler = require('../common/errorHandler');
 
-User.methods(['get', 'post', 'put', 'delete']);
+User.methods(['get', 'delete']);
 User.updateOptions({new : true});
 User.after('post', errorHandler).after('put', errorHandler);
 

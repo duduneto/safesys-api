@@ -27,8 +27,8 @@ const login = (req, res, next) => {
     const email = req.body.email || '';
     const password = req.body.password || '';
 
-    const salt = bcrypt.genSaltSync();
-    const passwordHasheado = bcrypt.hashSync(password, salt);
+    // const salt = bcrypt.genSaltSync();
+    // const passwordHasheado = bcrypt.hashSync(password, salt);
     
     
 
@@ -76,13 +76,26 @@ const validateToken = (req, res, token) => {
 
 const signup = (req, res, next) => {
     const name = req.body.name || '';
-    const email = req.body.email || '';
+    const emailNew = req.body.emailNew || '';
     const password = req.body.password || '';
     const confirmPassword = req.body.confirmPassword || '';
     const cpf = req.body.cpf || '';
     const tel = req.body.tel || '';
-    const adm = req.body.adm || '';
+    var adm = req.body.adm || '';
+    const admEmail = req.body.admEmail || '';
+    const admPassword = req.body.admPassword || '';
+    var email = '';
+    console.log(name, emailNew, password, confirmPassword, cpf, tel, adm, admEmail, admPassword)
+    
 
+    if( adm == '0'){
+        adm = false
+    } else {
+        adm = true
+    }
+    console.log(adm, typeof(adm))
+
+    email = admEmail;
     if(!email.match(emailRegex)) {
         return res.status(400).send({ erros: [ 'O email informado é inválido' ]});
     }
@@ -97,24 +110,47 @@ const signup = (req, res, next) => {
     if(!(password == confirmPassword)){
         return res.status(400).send( { errors: ['Senhas não conferem'] } )
     }
-
-    User.findOne({email}, (err, user) => {
+    User.findOne( {email}, (err, user) => {
         if(err){
-            return sendErrorsFromDB(res, err);
-        } else if(user){
-            return res.status(400).send({error:['Usuário já cadastrado']})
+            return sendErrorsFromDB (res, err);
+            
+        } else if (user && bcrypt.compareSync(admPassword, user.password) ) {
+            if(user.adm === true){
+                email = emailNew
+                User.findOne({email}, (err, user) => {
+                        if(err){
+                            return sendErrorsFromDB(res, err);
+                        } else if(user){
+                            return res.status(400).send({error:['Usuário já cadastrado']})
+                        } else {
+                            
+                            const newUser = new User({name, email, password: passwordHash, cpf, tel, adm});
+                            newUser.save(err => {
+                                if(err){
+                                    return sendErrorsFromDB(res, err);
+                                    res.status(400).send({ error:['Usuário não cadastrado']})
+                                } 
+                                else {
+                                    res.status(201).send({msg: ['Usuário Cadastrado com Sucesso']})
+                                }
+                            })
+                        }
+                    });
+            } else{
+                return res.status(403).send({ error: ['O Usuário não possui autorização para Criar a Conta']})
+            }
+            // const { name, email, adm } = user
+            // res.json({ name, email, token, adm });
+
+            // return res.status(200).send({ token : "Acharam um Token" ,  usuario: user, tokenzim: token });
+            
         } else {
-            const newUser = new User({name, email, password: passwordHash, cpf, tel, adm});
-            newUser.save(err => {
-                if(err){
-                    return sendErrorsFromDB(res, err);
-                } 
-                // else {
-                //     login(req, res, next);
-                // }
-            })
+            return res.status(400).send({ errors: ['Não Achou o Usuario que Criou'] });
+            
         }
     });
+
+    // 
 }
 
 module.exports = { login, signup, validateToken };
