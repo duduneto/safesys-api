@@ -101,13 +101,14 @@ const signup = (req, res, next) => {
         } else if(user){
             return res.status(400).send({error:['Usuário já cadastrado']})
         } else {
-            const newUser = new User({name, email, password: passwordHash});
+            const newUser = new User({name, email, password: passwordHash, cpf, tel, adm});
             newUser.save(err => {
                 if(err){
                     return sendErrorsFromDB(res, err);
-                } else {
-                    login(req, res, next);
-                }
+                } 
+                // else {
+                //     login(req, res, next);
+                // }
             })
         }
     });
