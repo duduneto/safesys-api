@@ -3,6 +3,8 @@ const mongoose = restful.mongoose;
 
 const userSchema = new mongoose.Schema({ 
     name: { type: String, required: true },
+    cpf: { type: String, default:''},
+    tel: { type: String, default:''},
     email: { type: String, required: true },
     password: { type: String, min: 6, max: 12, required: true },
     adm: {type: Boolean, default: false }
