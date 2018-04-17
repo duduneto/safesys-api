@@ -16,7 +16,9 @@ const contratoSchema = new mongoose.Schema({
     sexo: { type:String, required: [true, ' Sexo é Obrigatório '], uppercase: true,
             enum: ['MASCULINO','FEMININO'] },
     confirm_processo: {type: Boolean, default: false },
-    numero_de_dependente: { type: Number, default: 0}
+    numero_de_dependente: { type: Number, default: 0},
+    responsavel_cpf:{ type: String, default: 'adm'},
+
 
 });
 

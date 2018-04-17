@@ -40,7 +40,7 @@ const login = (req, res, next) => {
             
             const token = jwt.sign( {user} , process.env.AUTH_SECRET , { expiresIn: '1 day' });
             
-            const { name, email } = user
+            const { name, email, adm } = user
             res.json({ name, email, token, adm });
 
             // return res.status(200).send({ token : "Acharam um Token" ,  usuario: user, tokenzim: token });
