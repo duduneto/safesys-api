@@ -81,7 +81,7 @@ const signup = (req, res, next) => {
     const confirmPassword = req.body.confirmPassword || '';
     const cpf = req.body.cpf || '';
     const tel = req.body.tel || '';
-    const adm = req.body.adm || false;
+    const adm = req.body.adm || '';
 
     if(!email.match(emailRegex)) {
         return res.status(400).send({ erros: [ 'O email informado é inválido' ]});
